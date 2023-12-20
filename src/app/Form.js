@@ -44,7 +44,7 @@ const Form = () => {
 
     // Assuming sendMail function is available globally or imported
     const emailData = {
-      to: 'salah555tazrouti@gmail.com', // Change to the desired email address
+      to: 'receiver email', // Change to the desired email address
       subject: 'Subject of the email',
       text: `Name: ${formData.name}\nEmail: ${formData.email}\nMessage: ${formData.message}`,
       html: `<p><strong>Name:</strong> ${formData.name}</p><p><strong>Email:</strong> ${formData.email}</p><p><strong>Message:</strong> ${formData.message}</p>`,
