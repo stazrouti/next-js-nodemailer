@@ -1,5 +1,5 @@
 "use server";
-
+//send mail to your self
 const nodemailer = require('nodemailer');
 const { google } = require('googleapis');
 
@@ -32,9 +32,10 @@ export async function sendMail(emailData) {
       },
     });
 
+    // Customize the email content based on form data
     const mailOptions = {
-      from: `your name <youremail@gmail.com>`,
-      to: emailData.to,
+      from: `${emailData.senderName} <${emailData.senderEmail}>`,
+      to: 'youremail@gmail.com', // Send to your own email address
       subject: emailData.subject,
       text: emailData.text,
       html: emailData.html,
@@ -46,4 +47,3 @@ export async function sendMail(emailData) {
     return error;
   }
 }
-
