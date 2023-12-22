@@ -1,5 +1,5 @@
 "use server";
-//send mail to your self
+/* v2 */
 const nodemailer = require('nodemailer');
 const { google } = require('googleapis');
 
@@ -24,7 +24,7 @@ export async function sendMail(emailData) {
       service: 'gmail',
       auth: {
         type: 'OAuth2',
-        user: 'youremail@gmail.com',
+        user: 'YourEmail@gmail.com',
         clientId: CLIENT_ID,
         clientSecret: CLIENT_SECRET,
         refreshToken: REFRESH_TOKEN,
@@ -32,13 +32,31 @@ export async function sendMail(emailData) {
       },
     });
 
+  const filename = emailData.filename;
+
+        // Use a regular expression to match the timestamp
+        const timestampRegex = /^\d+_/; // Matches one or more digits followed by an underscore at the beginning of the string
+
+        // Remove the timestamp from the filename
+        const cleanedFilename = filename.replace(timestampRegex, '');
+
+        console.log(cleanedFilename);
+
+
     // Customize the email content based on form data
     const mailOptions = {
       from: `${emailData.senderName} <${emailData.senderEmail}>`,
-      to: 'youremail@gmail.com', // Send to your own email address
-      subject: emailData.subject,
+      to: 'YourEmail@gmail.com', // Send to your own email address
+      subject: 'job apply',
       text: emailData.text,
       html: emailData.html,
+      attachments: [
+        {
+          filename: `${cleanedFilename}`,
+          path:`./public/upload/${emailData.filename}`
+        }
+      ],
+      
     };
 
     const result = await transport.sendMail(mailOptions);
@@ -47,3 +65,4 @@ export async function sendMail(emailData) {
     return error;
   }
 }
+
